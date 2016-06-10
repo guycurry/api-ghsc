@@ -16,4 +16,11 @@ public class GreetingController {
         return new Greeting(counter.incrementAndGet(),
                             String.format(template, name));
     }
+
+    @RequestMapping("/recipebook")
+    public RecipeBook recipebook(@RequestParam(value="name", defaultValue="World") String name) {
+        return new RecipeBook("1",
+                            String.format(template, name));
+    }
+
 }
