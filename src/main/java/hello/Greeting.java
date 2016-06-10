@@ -1,4 +1,4 @@
-package hello;
+package API_GHSC;
 
 public class Greeting {
 
