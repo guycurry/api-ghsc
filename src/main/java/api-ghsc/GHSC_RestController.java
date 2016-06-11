@@ -19,8 +19,7 @@ public class GHSC_RestController {
 
     @RequestMapping("/recipebook")
     public RecipeBook recipebook(@RequestParam(value="name", defaultValue="World") String name) {
-        return new RecipeBook("1",
-                            String.format(template, name));
+        return new RecipeBook("1", String.format(template, name));
     }
 
 }
