@@ -5,7 +5,7 @@ public class Recipe {
     private final String id;
     private final String api_id;
 
-    public RecipeBook(String id, String api_id) {
+    public Recipe(String id, String api_id) {
         this.id = id;
         this.api_id = api_id;
     }
@@ -17,4 +17,7 @@ public class Recipe {
     public String getAPI_ID() {
         return api_id;
     }
+
+
+    
 }
