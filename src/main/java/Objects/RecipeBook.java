@@ -1,5 +1,6 @@
 package API_GHSC;
 
+
 public class RecipeBook extends DatabaseBaseObject {
 
     private final String id;
@@ -8,4 +9,5 @@ public class RecipeBook extends DatabaseBaseObject {
         this.id = id;
     }
 
+    
 }
