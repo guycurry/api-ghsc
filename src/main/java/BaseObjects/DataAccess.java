@@ -27,6 +27,8 @@ public class DataAccess {
     	catch( Exception e )
     	{ 
     		System.err.println("DatabaseConnection - Failed");
+            System.err.println("Database URL");
+            System.err.println(System.getenv("DATABASE_URL"));
     		System.err.println(e.getMessage());
     		System.err.println(e.getStackTrace());
     	}
