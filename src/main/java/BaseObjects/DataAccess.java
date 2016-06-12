@@ -20,6 +20,7 @@ public class DataAccess {
     	Connection c = null;
     	try
     	{
+            Class.forName("org.postgresql.Driver");
 	    	String dbUrl = System.getenv("DATABASE_URL");
 	    	c = DriverManager.getConnection(dbUrl);
     	}
