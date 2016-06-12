@@ -36,6 +36,9 @@ public class DataAccess {
 
     public static ResultSet ExecuteQuery(String sql, int Param) 
     {
+        if( conn == null )
+            conn = DataAccess.getConnection();
+
         ResultSet rs = null;
         try
         {
