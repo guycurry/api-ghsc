@@ -41,10 +41,13 @@ public class DataAccess {
     {
         if( conn == null )
             conn = DataAccess.getConnection();
+        if( conn == null )
+            return null;
 
         ResultSet rs = null;
         try
         {
+
             Statement st = conn.createStatement();
             rs = st.executeQuery("SELECT * FROM mytable WHERE columnfoo = 500");
             //PreparedStatement st = conn.prepareStatement(sql);
