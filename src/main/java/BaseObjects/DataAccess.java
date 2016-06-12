@@ -7,11 +7,11 @@ import java.net.*;
 public class DataAccess {
 
 
-	private static Connection postgres = null;
+	private static Connection conn = null;
 
     public DataAccess() {
-        if( postgres == null )
-        	postgres = this.getConnection();
+        if( conn == null )
+        	conn = this.getConnection();
     }
 
 
@@ -34,19 +34,28 @@ public class DataAccess {
 
 	}
 
-    public static ResultSet ExecuteQuery(String sql, int Param)
+    public static ResultSet ExecuteQuery(String sql, int Param) 
     {
-
-        PreparedStatement st = conn.prepareStatement(sql);
-        st.setInt(1, Param);
-        ResultSet rs = st.executeQuery();
-        while (rs.next())
+        ResultSet rs = null;
+        try
         {
-           System.err.println("Column 1 returned ");
-           System.err.println(rs.getString(1));
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, Param);
+            rs = st.executeQuery();
+            while (rs.next())
+            {
+               System.err.println("Column 1 returned ");
+               System.err.println(rs.getString(1));
+            }
+            rs.close();
+            st.close();
         }
-        rs.close();
-        st.close();
+        catch( SQLException e )
+        {
+            System.err.println("ExecuteQuery - Failed");
+            System.err.println(e.getMessage());
+            System.err.println(e.getStackTrace());
+        }
 
         return rs;
 
