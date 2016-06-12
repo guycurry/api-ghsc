@@ -18,8 +18,9 @@ public class GHSC_RestController {
     }
 
     @RequestMapping("/recipebooks")
-    public RecipeBook recipebooks(@RequestParam(value="UserID") String UserID) {
-        return new RecipeBook(String.format(template, UserID));
+    public RecipeBook[] recipebooks(@RequestParam(value="UserID") String UserID) {
+        //return new RecipeBook(1);
+        return RecipeBook.GetRecipeBooksForUser(Integer.parseInt(UserID));
     }
 
 }
