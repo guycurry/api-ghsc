@@ -19,7 +19,7 @@ public class RecipeBook extends DatabaseBaseObject {
 
     public static RecipeBook[] GetRecipeBooksForUser(int UserID)
     {
-    	RecipeBook[] books = new RecipeBook[0];
+    	DataAccess.ExecuteQuery("SELECT * FROM recipe_books WHERE User_ID = ?", UserID);
 
     	return books;
     }

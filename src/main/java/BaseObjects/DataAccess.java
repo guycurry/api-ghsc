@@ -34,4 +34,22 @@ public class DataAccess {
 
 	}
 
+    public static ResultSet ExecuteQuery(String sql, int Param)
+    {
+
+        PreparedStatement st = conn.prepareStatement(sql);
+        st.setInt(1, Param);
+        ResultSet rs = st.executeQuery();
+        while (rs.next())
+        {
+           System.err.println("Column 1 returned ");
+           System.err.println(rs.getString(1));
+        }
+        rs.close();
+        st.close();
+
+        return rs;
+
+    }
+
 }
