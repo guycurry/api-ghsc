@@ -43,9 +43,11 @@ public class DataAccess {
         ResultSet rs = null;
         try
         {
-            PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, Param);
-            rs = st.executeQuery();
+            Statement st = conn.createStatement();
+            rs = st.executeQuery("SELECT * FROM mytable WHERE columnfoo = 500");
+            //PreparedStatement st = conn.prepareStatement(sql);
+            //st.setInt(1, Param);
+            //rs = st.executeQuery();
             while (rs.next())
             {
                System.err.println("Column 1 returned ");
