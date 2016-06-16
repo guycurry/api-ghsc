@@ -6,29 +6,38 @@ import java.net.*;
 
 public class DataAccess {
 
-
+    private static String connectionURL = null;
 	private static Connection conn = null;
+    private static String userName = null;
+    private static String password = null;
 
     public DataAccess() {
-        if( conn == null )
-        	conn = this.getConnection();
+        
     }
 
 
     private static Connection getConnection() {
-    	
+
+        if( conn != null )
+            return conn;        
+
+        String[] params = DataAccess.GetConnectionString();
+
+
     	Connection c = null;
     	try
     	{
             Class.forName("org.postgresql.Driver");
-	    	String dbUrl = System.getenv("DATABASE_URL");
-	    	c = DriverManager.getConnection(dbUrl);
+	    	//c = DriverManager.getConnection(connectionURL);
+            c = DriverManager.getConnection(params[0],params[1],params[2]);
     	}
     	catch( Exception e )
     	{ 
     		System.err.println("DatabaseConnection - Failed");
             System.err.println("Database URL");
-            System.err.println(System.getenv("DATABASE_URL"));
+            System.err.println(params[0]);
+            System.err.println(params[1]);
+            System.err.println(params[2]);
     		System.err.println(e.getMessage());
     		System.err.println(e.getStackTrace());
     	}
@@ -36,6 +45,32 @@ public class DataAccess {
     	return c;
 
 	}
+
+    private static String[] GetConnectionString()
+    {
+        
+
+        if( connectionURL == null )
+            connectionURL = System.getenv("DATABASE_URL");
+
+        if( connectionURL == null )
+            connectionURL = "postgres://zrtyqvgdixrxvw:dho7HLp0KpTMFeNvsOafGFeAct@ec2-54-235-132-192.compute-1.amazonaws.com:5432/da5s7hb54a0q5d";
+
+
+        
+        String[] params = connectionURL.split(":");
+        String URL = "jdbc:"+params[0]+"://"+params[2].split("@")[1]+":"+params[3];
+
+        String UserName = params[1].substring(2,params[1].length());
+        String Password = params[2].split("@")[0];
+        
+        System.err.println("DB_URL = "+ URL);
+        System.err.println("UserName = "+ UserName);
+        System.err.println("Password = "+ Password);
+
+        return new String[] {URL, UserName, Password};
+
+    }
 
     public static ResultSet ExecuteQuery(String sql, int Param) 
     {
