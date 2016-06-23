@@ -2,6 +2,7 @@ package API_GHSC;
 
 import java.sql.*;
 import java.net.*;
+import java.util.*;
 
 
 public class DataAccess {
@@ -23,24 +24,47 @@ public class DataAccess {
 
         String[] params = DataAccess.GetConnectionString();
 
+        Properties props = new Properties();
+        props.setProperty("user",params[1]);
+        props.setProperty("password",params[2]);
+        props.setProperty("ssl","true");
 
     	Connection c = null;
     	try
     	{
-            Class.forName("org.postgresql.Driver");
+            //Class.forName("org.postgresql.Driver");
+
 	    	//c = DriverManager.getConnection(connectionURL);
+            //c = DriverManager.getConnection(params[0],props);
             c = DriverManager.getConnection(params[0],params[1],params[2]);
     	}
-    	catch( Exception e )
-    	{ 
-    		System.err.println("DatabaseConnection - Failed");
+        catch( SQLException e )
+        {
+            System.err.println("DatabaseConnection - Failed (SQLException)");
             System.err.println("Database URL");
-            System.err.println(params[0]);
-            System.err.println(params[1]);
-            System.err.println(params[2]);
+            //System.err.println(params[0]);
+            //System.err.println(params[1]);
+            //System.err.println(params[2]);
+            System.err.println(e.getMessage());
+            System.err.println(e.getStackTrace());
+            System.err.println(e.getSQLState());
+            System.err.println(e.getLocalizedMessage());
+        }
+    	/*
+        catch( ClassNotFoundException e )
+    	{ 
+    		System.err.println("DatabaseConnection - Failed (ClassNotFoundException)");
+            System.err.println("Database URL");
+            //System.err.println(params[0]);
+            //System.err.println(params[1]);
+            //System.err.println(params[2]);
     		System.err.println(e.getMessage());
     		System.err.println(e.getStackTrace());
+            System.err.println(e.getLocalizedMessage());
+            System.err.println(e.getCause());
+
     	}
+        */
 
     	return c;
 
@@ -59,7 +83,7 @@ public class DataAccess {
 
         
         String[] params = connectionURL.split(":");
-        String URL = "jdbc:"+params[0]+"://"+params[2].split("@")[1]+":"+params[3];
+        String URL = "jdbc:postgresql://"+params[2].split("@")[1]+":"+params[3];
 
         String UserName = params[1].substring(2,params[1].length());
         String Password = params[2].split("@")[0];
@@ -101,6 +125,7 @@ public class DataAccess {
             System.err.println("ExecuteQuery - Failed");
             System.err.println(e.getMessage());
             System.err.println(e.getStackTrace());
+            System.err.println(e.getSQLState());
         }
 
         return rs;
