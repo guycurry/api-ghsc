@@ -34,9 +34,9 @@ public class DataAccess {
     	{
             //Class.forName("org.postgresql.Driver");
 
-	    	c = DriverManager.getConnection(System.getenv("DATABASE_URL"));
+	    	//c = DriverManager.getConnection(System.getenv("DATABASE_URL"));
             //c = DriverManager.getConnection(params[0],props);
-            //c = DriverManager.getConnection(params[0],params[1],params[2]);
+            c = DriverManager.getConnection(params[0],params[1],params[2]);
 
 
 
